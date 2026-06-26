@@ -190,6 +190,13 @@ body {
   font-weight: 700;
 }
 
+/* Dedicated full-width "go fullscreen" button below the transport row. */
+.tp__btn--fs {
+  width: 100%;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .tp__hint {
   margin: 0;
   font-size: clamp(0.7rem, 0.95vw, 0.88rem);

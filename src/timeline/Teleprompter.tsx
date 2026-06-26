@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { SEGMENTS, TOTAL_SECONDS, activeIndex, fmt } from './segments'
 import { useStopwatch } from './useStopwatch'
@@ -14,6 +14,7 @@ import { useStopwatch } from './useStopwatch'
  */
 export default function Teleprompter() {
   const { elapsed, running, toggle, reset, seek } = useStopwatch()
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const i = activeIndex(elapsed)
   const seg = SEGMENTS[i]
@@ -39,6 +40,17 @@ export default function Teleprompter() {
   const toggleFullscreen = useCallback(() => {
     if (document.fullscreenElement) void document.exitFullscreen()
     else void document.documentElement.requestFullscreen()
+  }, [])
+
+  // Keep the button label in sync when fullscreen is toggled or exited (e.g. via Esc).
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement))
+    document.addEventListener('fullscreenchange', onChange)
+    document.addEventListener('webkitfullscreenchange', onChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange)
+      document.removeEventListener('webkitfullscreenchange', onChange)
+    }
   }, [])
 
   // Keyboard transport. Buttons keep focus off so Space doesn't double-fire.
@@ -109,6 +121,15 @@ export default function Teleprompter() {
               ↺
             </button>
           </div>
+
+          <button
+            type="button"
+            className="tp__btn tp__btn--fs"
+            onClick={toggleFullscreen}
+            aria-pressed={isFullscreen}
+          >
+            {isFullscreen ? '⤢ Sair da tela cheia' : '⛶ Entrar em tela cheia'}
+          </button>
 
           <p className="tp__hint">
             <kbd>Espaço</kbd> iniciar/pausar &nbsp;·&nbsp; <kbd>←</kbd> <kbd>→</kbd> blocos
