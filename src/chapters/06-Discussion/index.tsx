@@ -10,9 +10,9 @@ import { discussion, debateCards } from '@/content/copy'
 /**
  * Chapter 06 · Discussion (paper scene).
  *
- * Closes the diagnosis by handing the room four real tensions instead of a
+ * Closes the diagnosis by handing the room five real tensions instead of a
  * verdict. The SectionHead opens with the chapter number and headline; the
- * intro sets the rule ("there is no single answer"); the four debates ride a
+ * intro sets the rule ("there is no single answer"); the five debates ride a
  * full-bleed peeking CAROUSEL of poster cards. Each card leads with its question
  * (large and legible) and expands in place to reveal the two opposing lenses and
  * the data footnote — the chapter's primary motion. The carousel owns the
@@ -35,7 +35,7 @@ export default function Discussion() {
         </Reveal>
 
         <div className="flex flex-col gap-3">
-          <DividerLabel>Os quatro debates</DividerLabel>
+          <DividerLabel>Os cinco debates</DividerLabel>
           <DebateCarousel cards={debateCards} />
         </div>
       </div>

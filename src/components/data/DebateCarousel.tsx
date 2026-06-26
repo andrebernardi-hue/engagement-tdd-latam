@@ -4,7 +4,7 @@ import { DebateCard } from './DebateCard'
 import { type DebateCard as DebateCardData } from '@/content/copy'
 
 /**
- * DebateCarousel (Chapter 06) — the four debate prompts as a full-bleed peeking
+ * DebateCarousel (Chapter 06) — the five debate prompts as a full-bleed peeking
  * deck of poster cards. A thin wrapper over the shared Carousel that owns the
  * one-open-at-a-time disclosure state.
  *
@@ -32,7 +32,7 @@ export function DebateCarousel({
       items={cards}
       getKey={(card) => card.num}
       itemLabel={(card, i) => `Pergunta ${i + 1} de ${cards.length}: ${card.theme}`}
-      ariaLabel="Quatro perguntas para abrir o debate"
+      ariaLabel="Cinco perguntas para abrir o debate"
       cardVw={0.6}
       maxCard={1180}
       prevLabel="Anterior"

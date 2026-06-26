@@ -308,7 +308,7 @@ export const rolloutPhases: RolloutPhase[] = [
  * ------------------------------------------------------------------ */
 export const discussion = {
   eyebrow: 'Perguntas para a turma',
-  headline: 'Quatro perguntas para abrir o debate.',
+  headline: 'Cinco perguntas para abrir o debate.',
   intro:
     'Não há resposta única. Cada cartão traz uma tensão real do caso e duas lentes opostas para a sala discutir.',
 }
@@ -316,6 +316,24 @@ export const discussion = {
 export const debateCards: DebateCard[] = [
   {
     num: 'Q1',
+    theme: 'Engajamento pós-M&A',
+    question:
+      'O engajamento caiu para 40, metade da meta, depois de três aquisições. É o custo de escalar ou o M&A corroendo o ativo que comprou?',
+    lensA: {
+      label: 'Custo de transição',
+      kind: 'a',
+      text: 'Quedas de engajamento são esperadas e temporárias em integrações agressivas. O negócio cresceu, com receita e lucro em alta, e o score tende a se recuperar quando as pessoas assentam.',
+    },
+    lensB: {
+      label: 'Destruição de valor',
+      kind: 'b',
+      text: '40 contra uma meta de 80 é um sinal antecipado, não ruído. O M&A subestimou o capital humano, e o talento e a cultura que foram comprados estão se desfazendo, com Stay em 25.',
+    },
+    footnote:
+      'Engajamento em 40, metade da meta de 80 do Scorecard, após três integrações em quatro anos. Stay (querer ficar) em 25, gap −49.',
+  },
+  {
+    num: 'Q2',
     theme: 'Segurança psicológica',
     question:
       'Como pedir “fale abertamente” e “a responsabilidade é sua” a quem acabou de dizer que tem medo de falar?',
@@ -333,7 +351,7 @@ export const debateCards: DebateCard[] = [
       '“É seguro me posicionar sem medo” tem 30 favorável, o pior item da pesquisa.',
   },
   {
-    num: 'Q2',
+    num: 'Q3',
     theme: 'Time vs instituição',
     question:
       'Até onde um bom gestor consegue blindar o time de uma cultura organizacional diluída?',
@@ -351,7 +369,7 @@ export const debateCards: DebateCard[] = [
       'Apoio do gestor 100 (+16 vs benchmark) convivendo com valores em 30 (−46). O bom líder está segurando. Por quanto tempo?',
   },
   {
-    num: 'Q3',
+    num: 'Q4',
     theme: 'M&A e cultura',
     question:
       'A diluição de identidade em aquisições sucessivas é inevitável ou foi falha de gestão da mudança?',
@@ -369,7 +387,7 @@ export const debateCards: DebateCard[] = [
       'Três integrações em quatro anos; 2025 foi descrito como “o ano com mais mudanças”, com forte diluição da identidade local.',
   },
   {
-    num: 'Q4',
+    num: 'Q5',
     theme: 'Turnover: até onde vale lutar?',
     question:
       'A empresa consegue distinguir por que cada pessoa sai e agir de forma diferente em cada caso?',
