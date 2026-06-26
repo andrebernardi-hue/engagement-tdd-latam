@@ -67,6 +67,10 @@ export default {
         // the content uses ~90% of the width — a bold, poster-like slide.
         slide: '1760px',
       },
+      height: {
+        // TELUS Digital logo in the nav (2rem ≈ 35% larger than the prior 24px).
+        logo: '2rem',
+      },
       letterSpacing: {
         eyebrow: '0.18em',
         tight: '-0.01em',

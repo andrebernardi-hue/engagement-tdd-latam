@@ -22,3 +22,10 @@ dist-ssr
 
 # Claude Code session state
 .claude/
+
+# Standalone single-file build + zips
+dist-singlefile/
+*.zip
+
+# Huge source plant renders (optimized copies live in src/assets/flora)
+briefing/images/

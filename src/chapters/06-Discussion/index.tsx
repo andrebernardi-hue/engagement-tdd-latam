@@ -24,7 +24,7 @@ export default function Discussion() {
       <div className="flex flex-col gap-6">
         <SectionHead
           id="discussion-head"
-          num="06"
+          num="05"
           eyebrow={discussion.eyebrow}
           title={discussion.headline}
           tone="paper"

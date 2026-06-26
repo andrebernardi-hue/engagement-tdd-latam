@@ -23,9 +23,9 @@ export default function App() {
         <Organization />
         <Problem />
         <Analysis />
-        <Solution />
         <Discussion />
         <Close />
+        <Solution />
       </Shell>
     </ScrollProvider>
   )
