@@ -25,9 +25,10 @@ export const CHAPTERS: Chapter[] = [
   { id: 'organization', num: '02', label: 'Organização', tone: 'paper', order: 2 },
   { id: 'problem', num: '03', label: 'O Problema', tone: 'invert', order: 3 },
   { id: 'analysis', num: '04', label: 'Análise', tone: 'paper', order: 4 },
-  { id: 'solution', num: '05', label: 'Solução', tone: 'paper', order: 5 },
-  { id: 'discussion', num: '06', label: 'Discussão', tone: 'paper', order: 6 },
-  { id: 'close', num: '—', label: 'Encerramento', tone: 'invert', order: 7 },
+  { id: 'discussion', num: '05', label: 'Discussão', tone: 'paper', order: 5 },
+  { id: 'close', num: '—', label: 'Encerramento', tone: 'invert', order: 6 },
+  // The recommendation closes the deck, after the encerramento.
+  { id: 'solution', num: '06', label: 'Solução', tone: 'paper', order: 7 },
 ]
 
 /** The pillars exposed in the top nav (the named story chapters, 00-06). */

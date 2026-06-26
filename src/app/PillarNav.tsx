@@ -3,6 +3,8 @@ import { PILLARS } from '@/content/chapters'
 import { useActiveChapter } from '@/app/useActiveChapter'
 import { useScrollTo, useScrollProgress } from '@/app/ScrollProvider'
 import { cn } from '@/lib/cn'
+import reportUrl from '@/assets/report.docx?url'
+import logo from '@/assets/telus-digital-logo.svg'
 
 /**
  * PillarNav — persistent top navigation (02-DESIGN-SYSTEM §5.2, 04 §2).
@@ -58,15 +60,43 @@ export function PillarNav() {
             : 'h-12 border-b border-transparent bg-transparent',
         )}
       >
-        {/* Wordmark (text only, no logo asset). */}
-        <button
-          type="button"
-          onClick={() => scrollTo('hero')}
-          aria-label="Voltar à abertura"
-          className="t-mono-label shrink-0 font-bold tracking-eyebrow text-plum"
-        >
-          TELUS&nbsp;&middot;&nbsp;Design&nbsp;LATAM
-        </button>
+        {/* Left group: wordmark + the report download. */}
+        <div className="flex shrink-0 items-center gap-2">
+          {/* TELUS Digital logo + the operation suffix. */}
+          <button
+            type="button"
+            onClick={() => scrollTo('hero')}
+            aria-label="Voltar à abertura"
+            className="flex items-center gap-1.5"
+          >
+            <img src={logo} alt="TELUS Digital" className="h-logo w-auto" />
+            <span className="t-mono-label hidden font-bold tracking-eyebrow text-muted sm:inline">
+              &middot;&nbsp;Design&nbsp;LATAM
+            </span>
+          </button>
+
+          {/* Download the full v4 report. */}
+          <a
+            href={reportUrl}
+            download="Caso TELUS - GEP v4 (formatado).docx"
+            className="t-mono-label inline-flex items-center gap-1 rounded-pill border border-strong px-1.5 py-0.5 font-bold text-plum transition-colors duration-quick ease-brand hover:bg-plum hover:text-white"
+          >
+            <svg
+              aria-hidden
+              width="13"
+              height="13"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M8 2.5v8M4.5 7l3.5 3.5L11.5 7M3 13h10" />
+            </svg>
+            Baixar relatório
+          </a>
+        </div>
 
         <ul className="flex items-center gap-0.5 sm:gap-1.5">
           {PILLARS.map((pillar) => {

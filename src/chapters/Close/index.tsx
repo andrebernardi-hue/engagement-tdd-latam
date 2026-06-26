@@ -10,6 +10,7 @@ import {
   RevealGroup,
   RevealItem,
 } from '@/components/primitives'
+import beech from '@/assets/flora/beech-dark.png'
 
 /**
  * Close — the calm closing diagnosis that bookends the dilution-to-recovery
@@ -24,8 +25,21 @@ import {
 const CHAPTER = CHAPTERS.find((c) => c.id === 'close')!
 
 export default function Close() {
+  // Digital Flora bookend: the dark Beech plant as a quiet decoration on the
+  // right, bleeding off the edge, behind the content (light touch on dark).
+  const backdrop = (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden opacity-80 lg:block"
+    >
+      {/* Natural aspect (no object-cover crop) at full height, shifted right so
+          the plant bleeds off the edge cleanly instead of being sliced. */}
+      <img src={beech} alt="" className="h-full w-auto translate-x-1/4" />
+    </div>
+  )
+
   return (
-    <SectionShell id={CHAPTER.id} tone="invert" labelledBy="close-head">
+    <SectionShell id={CHAPTER.id} tone="invert" labelledBy="close-head" backdrop={backdrop}>
       <div className="flex flex-col gap-8">
         <SectionHead
           id="close-head"

@@ -5,10 +5,10 @@ import {
   CaveatPanel,
   SayStayStrive,
   ParadoxColumns,
-  DivergingBars,
 } from '@/components/data'
 import { QuoteCarousel } from '@/components/data/QuoteCarousel'
 import { problem } from '@/content/copy'
+import staghorn from '@/assets/flora/staghorn-dark.png'
 
 /**
  * Chapter 03 · The Central Problem (tone: invert) — a cohesive DARK diagnosis.
@@ -36,10 +36,30 @@ import { problem } from '@/content/copy'
  * renders its own dark surface and is placed directly.
  */
 export default function Problem() {
+  // Digital Flora: the dark Staghorn grows from the bottom of the diagnosis,
+  // bleeding off the bottom edge, behind the content (light touch on dark).
+  const backdrop = (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-0 hidden justify-start opacity-80 lg:flex"
+    >
+      <img
+        src={staghorn}
+        alt=""
+        className="h-auto w-2/5 max-w-content -translate-x-1/4 translate-y-1/4 object-contain object-bottom"
+      />
+    </div>
+  )
+
   return (
-    <SectionShell id="problem" tone="invert" labelledBy="problem-head">
+    <SectionShell
+      id="problem"
+      tone="invert"
+      labelledBy="problem-head"
+      backdrop={backdrop}
+    >
       {/* One reading column so prose and every chart card align. */}
-      <div className="mx-auto flex max-w-content flex-col gap-8">
+      <div className="relative z-10 mx-auto flex max-w-content flex-col gap-8">
         {/* Chapter header — inverted register. */}
         <SectionHead
           id="problem-head"
@@ -94,20 +114,12 @@ export default function Problem() {
           </Panel>
         </Reveal>
 
-        {/* (7) DivergingBars — the 12-dimension chart (renders its own caption). */}
-        <DividerLabel tone="invert">Dimensão a dimensão</DividerLabel>
-        <Reveal>
-          <Panel tone="invert" pad="lg">
-            <DivergingBars />
-          </Panel>
-        </Reveal>
-
-        {/* (8) The human voice — employee verbatims as poster-style pull-quotes
+        {/* (7) The human voice — employee verbatims as poster-style pull-quotes
             woven into the dark scene (shared peeking carousel). */}
         <DividerLabel tone="invert">Nas palavras deles</DividerLabel>
         <QuoteCarousel />
 
-        {/* (9) Methodological honesty — one clean dark panel, intro + caveats. */}
+        {/* (8) Methodological honesty — one clean dark panel, intro + caveats. */}
         <DividerLabel tone="invert">Leia com honestidade</DividerLabel>
         <CaveatPanel intro={problem.methodologyBody} />
       </div>

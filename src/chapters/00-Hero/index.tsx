@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 
 import { SectionShell, Eyebrow, Reveal, RevealGroup, RevealItem } from '@/components/primitives'
@@ -6,24 +6,19 @@ import { hero } from '@/content/copy'
 import { heroKpis } from '@/content/case'
 import { useCountUp } from '@/lib/useCountUp'
 import { useReducedMotion } from '@/lib/useReducedMotion'
-import { useScrollProgress } from '@/app/ScrollProvider'
 import { formatInt } from '@/lib/format'
 import { easeBezier, duration } from '@/lib/motion'
-import { HeroFallback } from '@/webgl/HeroFallback'
+import eucalyptus from '@/assets/flora/eucalyptus.png'
 
 /**
  * Chapter 00 · Opening (Hero).
  *
- * A shader-backed full-viewport scene: the signature HeroField (lazy-loaded so
- * three.js stays out of the main bundle) drifts behind the one-line thesis. The
- * "140,000" inside the headline settles with a subtle count-up; a KPI strip and
- * a pulsing scroll cue anchor the bottom. Scroll-out progress is fed to the
- * shader through a ref so the field disperses without re-rendering React.
+ * A full-viewport scene built around the TELUS Digital "Digital Flora": the
+ * Eucalyptus plant (the generic brand plant) sits on the right, bleeding off the
+ * edge, with the one-line thesis on the left. The "140 mil" in the headline
+ * settles with a subtle count-up; a KPI strip and a pulsing scroll cue anchor
+ * the bottom.
  */
-
-// Lazy WebGL chunk. The matching CSS-gradient fallback is imported statically
-// from its own module (no three.js) so the Suspense placeholder is cheap.
-const HeroField = lazy(() => import('@/webgl/HeroField'))
 
 /** Split token inside hero.headline that gets the count-up treatment. The
  * pt-BR headline reads "140 mil"; the counter ticks to 140 and the " mil" word
@@ -114,26 +109,27 @@ function ScrollCue(): JSX.Element {
 }
 
 export default function Hero(): JSX.Element {
-  // Scroll-out progress, written every event into a ref (no re-render), read by
-  // the shader's useFrame to disperse the field as the hero leaves the viewport.
-  const progressRef = useRef(0)
-  useScrollProgress((p) => {
-    progressRef.current = p
-  })
-
-  const backdrop: ReactNode = (
-    <div className="absolute inset-0 z-0">
-      <Suspense fallback={<HeroFallback className="size-full" />}>
-        <HeroField progressRef={progressRef} />
-      </Suspense>
+  // Digital Flora: the Eucalyptus plant on the right, bleeding off the edge.
+  // Shown from lg up (where there is room beside the thesis); decorative.
+  const backdrop = (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-1/2 lg:block xl:w-2/5"
+    >
+      <img
+        src={eucalyptus}
+        alt=""
+        className="size-full object-cover object-left"
+      />
     </div>
   )
 
   return (
     <SectionShell id="hero" tone="shader" labelledBy="hero-head" backdrop={backdrop}>
       <div className="relative z-10 flex min-h-screen flex-col justify-center gap-5 py-12">
-        {/* Thesis: eyebrow, headline, lead. */}
-        <RevealGroup amount={0.07} className="flex max-w-content flex-col gap-2">
+        {/* Thesis: eyebrow, headline, lead. Constrained left so it stays clear
+            of the plant on the right. */}
+        <RevealGroup amount={0.07} className="flex max-w-3xl flex-col gap-2">
           <RevealItem>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
           </RevealItem>
@@ -141,13 +137,13 @@ export default function Hero(): JSX.Element {
             <Headline id="hero-head" />
           </RevealItem>
           <RevealItem>
-            <p className="t-lead max-w-content text-plum-ink opacity-80">{hero.lead}</p>
+            <p className="t-lead max-w-2xl text-plum-ink opacity-80">{hero.lead}</p>
           </RevealItem>
         </RevealGroup>
 
         {/* Headline numbers as a mono KPI strip, near the bottom of the scene. */}
         <Reveal delay={0.2}>
-          <div className="flex flex-wrap items-baseline gap-2 border-t border-line pt-2">
+          <div className="flex max-w-3xl flex-wrap items-baseline gap-2 border-t border-line pt-2">
             {heroKpis.map((kpi, i) => (
               <span key={kpi.label} className="inline-flex items-baseline gap-2">
                 {i > 0 && <Dot />}
