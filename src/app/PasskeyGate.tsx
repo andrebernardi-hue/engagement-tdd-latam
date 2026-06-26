@@ -1,4 +1,5 @@
 import { useState, type FormEvent, type ReactNode } from 'react'
+import { Button } from '@/components/primitives/Button'
 import { cn } from '@/lib/cn'
 
 /** The passkey that unlocks the experience. */
@@ -64,6 +65,9 @@ export function PasskeyGate({ children }: { children: ReactNode }) {
             Incorrect passkey
           </p>
         )}
+        <Button type="submit" variant="solid" className="mt-5 w-full">
+          Enter
+        </Button>
       </form>
     </main>
   )
