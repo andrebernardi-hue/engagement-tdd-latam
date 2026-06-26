@@ -7,11 +7,9 @@ import {
   type ReactNode,
 } from 'react'
 import Lenis from 'lenis'
-import Snap from 'lenis/snap'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useReducedMotion } from '@/lib/useReducedMotion'
-import { CHAPTERS } from '@/content/chapters'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -84,26 +82,11 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
     gsap.ticker.add(raf)
     gsap.ticker.lagSmoothing(0)
 
-    // Proximity snap: when the user stops scrolling near a section boundary, the
-    // section's top snaps to the viewport top — a catchy "settle" that makes the
-    // deck feel like slides, without trapping scroll inside the tall sections
-    // (proximity only engages near a boundary, not mid-section).
-    const snap = new Snap(instance, {
-      type: 'proximity',
-      duration: 0.6,
-      easing: expoOut,
-    })
-    CHAPTERS.forEach((c) => {
-      const el = document.getElementById(c.id)
-      if (el) snap.addElement(el, { align: ['start'] })
-    })
-
     // Settle layout, then recalc triggers (handles font/async layout shifts).
     const settle = window.setTimeout(() => ScrollTrigger.refresh(), 300)
 
     return () => {
       window.clearTimeout(settle)
-      snap.destroy()
       gsap.ticker.remove(raf)
       instance.destroy()
       setLenis(null)
