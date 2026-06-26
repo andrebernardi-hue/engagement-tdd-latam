@@ -1,3 +1,4 @@
+import { PasskeyGate } from '@/app/PasskeyGate'
 import { ScrollProvider } from '@/app/ScrollProvider'
 import { Shell } from '@/app/Shell'
 import Hero from '@/chapters/00-Hero'
@@ -16,17 +17,19 @@ import Close from '@/chapters/Close'
  */
 export default function App() {
   return (
-    <ScrollProvider>
-      <Shell>
-        <Hero />
-        <Intro />
-        <Organization />
-        <Problem />
-        <Analysis />
-        <Discussion />
-        <Close />
-        <Solution />
-      </Shell>
-    </ScrollProvider>
+    <PasskeyGate>
+      <ScrollProvider>
+        <Shell>
+          <Hero />
+          <Intro />
+          <Organization />
+          <Problem />
+          <Analysis />
+          <Discussion />
+          <Close />
+          <Solution />
+        </Shell>
+      </ScrollProvider>
+    </PasskeyGate>
   )
 }
