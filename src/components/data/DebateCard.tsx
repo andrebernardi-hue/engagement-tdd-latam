@@ -8,7 +8,7 @@ import { type DebateCard as DebateCardData } from '@/content/copy'
 
 /**
  * DebateCard — a poster-style, EXPANDABLE debate prompt (02 §7.2, 04 §4.14).
- * One of the four Chapter 06 tensions: a big legible question with two opposing
+ * One of the five Chapter 06 tensions: a big legible question with two opposing
  * lenses and the data footnote that anchors the argument.
  *
  * The card matches the PosterCard art direction (oversized faint corner numeral,
