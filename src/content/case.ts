@@ -26,7 +26,7 @@ export const structureNesting: NestRing[] = [
   { entity: 'Grupo TELUS, global', count: 140000, display: '~140 mil' },
   { entity: 'TELUS Digital', count: 70000, display: '~70 mil' },
   { entity: 'Digital Agency', count: 965, display: '965' },
-  { entity: 'Design', count: 124, display: '124' },
+  { entity: 'Design', count: 130, display: '130' },
   {
     entity: 'Design LATAM (Poatek)',
     count: 41,

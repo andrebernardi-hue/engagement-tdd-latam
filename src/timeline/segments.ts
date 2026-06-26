@@ -42,7 +42,7 @@ export const SEGMENTS: Segment[] = [
     title: 'Abertura',
     screen: 'Hero · números de destaque',
     bullets: [
-      'Boutique de ~100 → célula de 41',
+      'Boutique de ~120 → célula de 41',
       'Dentro de 140 mil globais',
       'Pulsecheck 2025: engajamento 40',
       'Quartil inferior do mercado',
