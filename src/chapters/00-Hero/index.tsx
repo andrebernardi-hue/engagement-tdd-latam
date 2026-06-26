@@ -109,12 +109,13 @@ function ScrollCue(): JSX.Element {
 }
 
 export default function Hero(): JSX.Element {
-  // Digital Flora: the Eucalyptus plant on the right, bleeding off the edge.
-  // Shown from lg up (where there is room beside the thesis); decorative.
+  // Digital Flora: the Eucalyptus plant as a FIXED background on the right, so it
+  // stays put while the content scrolls over it. The opaque sections that follow
+  // scroll up and cover it, so it reads only behind the hero. Shown from lg up.
   const backdrop = (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-1/2 lg:block xl:w-2/5"
+      className="pointer-events-none fixed inset-y-0 right-0 z-0 hidden w-1/2 lg:block xl:w-2/5"
     >
       <img
         src={eucalyptus}
@@ -126,10 +127,10 @@ export default function Hero(): JSX.Element {
 
   return (
     <SectionShell id="hero" tone="shader" labelledBy="hero-head" backdrop={backdrop}>
-      <div className="relative z-10 flex min-h-screen flex-col justify-center gap-5 py-12">
-        {/* Thesis: eyebrow, headline, lead. Constrained left so it stays clear
-            of the plant on the right. */}
-        <RevealGroup amount={0.07} className="flex max-w-3xl flex-col gap-2">
+      <div className="relative z-10 flex flex-col gap-5">
+        {/* Thesis: eyebrow, headline, lead — at the regular content width, with
+            the plant living behind as a fixed background. */}
+        <RevealGroup amount={0.07} className="flex max-w-content flex-col gap-2">
           <RevealItem>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
           </RevealItem>
@@ -137,13 +138,13 @@ export default function Hero(): JSX.Element {
             <Headline id="hero-head" />
           </RevealItem>
           <RevealItem>
-            <p className="t-lead max-w-2xl text-plum-ink opacity-80">{hero.lead}</p>
+            <p className="t-lead max-w-content text-plum-ink opacity-80">{hero.lead}</p>
           </RevealItem>
         </RevealGroup>
 
         {/* Headline numbers as a mono KPI strip, near the bottom of the scene. */}
         <Reveal delay={0.2}>
-          <div className="flex max-w-3xl flex-wrap items-baseline gap-2 border-t border-line pt-2">
+          <div className="flex max-w-content flex-wrap items-baseline gap-2 border-t border-line pt-2">
             {heroKpis.map((kpi, i) => (
               <span key={kpi.label} className="inline-flex items-baseline gap-2">
                 {i > 0 && <Dot />}
