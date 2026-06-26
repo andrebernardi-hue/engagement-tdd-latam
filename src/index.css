@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * Base layer
+ * ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    /* Raw-CSS mirror of tokens for consumers that cannot use a Tailwind class
+       (scrollbars, the shader Suspense gradient, ::selection). Keep in sync
+       with tailwind.config.js and src/styles/tokens.ts. */
+    --plum: #4b286d;
+    --plum-deep: #2a1640;
+    --plum-ink: #1c1426;
+    --paper: #f2f1eb;
+    --paper-2: #eae8df;
+    --paper-card: #fbfaf6;
+    --lime: #7fbf2e;
+    --lime-bright: #8cd211;
+    --teal: #1e9e72;
+    --red: #c53a2b;
+    --amber: #e4b53c;
+    --line: rgba(28, 20, 38, 0.12);
+    --line-strong: rgba(28, 20, 38, 0.22);
+  }
+
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--plum) var(--paper-2);
+    /* Pre-paint background so the first frame matches the paper scene. */
+    background: var(--paper);
+  }
+
+  body {
+    @apply bg-paper font-body text-body text-plum-ink antialiased;
+    margin: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--lime);
+    color: var(--plum-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  /* Visible focus ring on every interactive element (02 §8). */
+  :focus-visible {
+    outline: 2px solid var(--lime);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Lenis smooth-scroll hooks. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Components layer: the shared editorial type fixtures (02 §3).
+ * These are the only place the type scale is named; chapters compose them.
+ * ------------------------------------------------------------------ */
+@layer components {
+  .t-hero {
+    @apply font-display text-hero font-bold;
+  }
+  .t-h2 {
+    @apply font-display text-h2 font-bold;
+  }
+  .t-h3 {
+    @apply font-display text-h3 font-semibold;
+  }
+  .t-lead {
+    @apply font-body text-lead text-muted;
+  }
+  .t-body {
+    @apply font-body text-body;
+  }
+  .t-eyebrow {
+    @apply font-mono text-eyebrow font-bold uppercase text-teal-text;
+  }
+  .t-chapternum {
+    @apply font-mono text-chapternum font-bold uppercase text-plum;
+  }
+  .t-stat {
+    @apply font-display text-stat font-bold;
+  }
+  .t-bigstat {
+    @apply font-display text-bigstat font-bold;
+  }
+  .t-mono-label {
+    @apply font-mono text-monolabel uppercase;
+  }
+  .t-mono-value {
+    @apply font-mono text-monovalue font-bold;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Glass surfaces. A frosted, tinted panel language that permeates
+   * the interface (cards, nav, wells). Kept legible (high-ish base
+   * opacity) so the light data-viz inside reads on both paper and
+   * inverted scenes. Tints layer a plum or teal wash over a paper base.
+   * No CSS transform transition here, so Framer reveals are not fought;
+   * hover animates only shadow + border.
+   * ---------------------------------------------------------------- */
+  .glass {
+    position: relative;
+    backdrop-filter: blur(16px) saturate(1.45);
+    -webkit-backdrop-filter: blur(16px) saturate(1.45);
+    background-color: rgba(251, 250, 246, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      inset 0 0 0 1px rgba(28, 20, 38, 0.04),
+      0 24px 50px -34px rgba(42, 22, 64, 0.5);
+    transition:
+      box-shadow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  /* Plum-tinted glass: the primary, "permeating" tint. */
+  .glass-plum {
+    background-image: linear-gradient(
+      135deg,
+      rgba(75, 40, 109, 0.13),
+      rgba(75, 40, 109, 0.04) 58%,
+      rgba(201, 182, 219, 0.12)
+    );
+    border-color: rgba(75, 40, 109, 0.16);
+  }
+  /* Teal/green-tinted glass: positive / healthy surfaces. */
+  .glass-teal {
+    background-image: linear-gradient(
+      135deg,
+      rgba(30, 158, 114, 0.13),
+      rgba(30, 158, 114, 0.03) 58%,
+      rgba(188, 217, 204, 0.14)
+    );
+    border-color: rgba(30, 158, 114, 0.2);
+  }
+  /* On an inverted (plum.deep) scene: a more opaque luminous panel so the
+     light data-viz inside keeps its contrast. */
+  .glass-on-dark {
+    background-color: rgba(248, 246, 252, 0.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 30px 60px -30px rgba(0, 0, 0, 0.55);
+  }
+  /* A dark frosted panel, for the rare surface that stays dark on dark. */
+  .glass-dark {
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    background-color: rgba(42, 22, 64, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  }
+  /* Subtle hover lift for interactive glass cards (shadow + border only). */
+  .glass-hover:hover {
+    border-color: rgba(75, 40, 109, 0.32);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 34px 64px -30px rgba(42, 22, 64, 0.6);
+  }
+  /* Inset glass for nested wells / tracks — subtler, less blur. */
+  .glass-inset {
+    backdrop-filter: blur(8px) saturate(1.2);
+    -webkit-backdrop-filter: blur(8px) saturate(1.2);
+    background-color: rgba(234, 232, 223, 0.5);
+    border: 1px solid rgba(28, 20, 38, 0.08);
+    box-shadow: inset 0 1px 2px rgba(28, 20, 38, 0.06);
+  }
+  /* Frosted nav bar. */
+  .glass-bar {
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    background-color: rgba(242, 241, 235, 0.72);
+    border-bottom: 1px solid rgba(28, 20, 38, 0.1);
+  }
+
+  /* Dark glass tag — a small frosted-dark pill (Pill primitive). Light text and
+     accent colors all meet AA on this ground. Reads on both paper and dark
+     scenes. */
+  .glass-tag {
+    backdrop-filter: blur(10px) saturate(1.3);
+    -webkit-backdrop-filter: blur(10px) saturate(1.3);
+    background-color: rgba(28, 20, 38, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 12px 26px -18px rgba(0, 0, 0, 0.7);
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Ambient scene blooms. Faint, large tinted washes behind content so
+   * glass panels have color to refract and the whole interface feels
+   * tinted (the "permeating glass" vibe). Paired with the soft hero field.
+   * ---------------------------------------------------------------- */
+  .bloom-paper {
+    background-image:
+      radial-gradient(58% 48% at 16% 14%, rgba(201, 182, 219, 0.55), transparent 70%),
+      radial-gradient(52% 44% at 90% 88%, rgba(188, 217, 204, 0.5), transparent 72%);
+  }
+  .bloom-invert {
+    background-image:
+      radial-gradient(60% 50% at 82% 10%, rgba(123, 79, 168, 0.4), transparent 70%),
+      radial-gradient(52% 46% at 10% 96%, rgba(30, 158, 114, 0.22), transparent 72%);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Utilities layer
+ * ------------------------------------------------------------------ */
+@layer utilities {
+  /* Apply just before a transform/opacity animation, remove after (perf §5). */
+  .gpu {
+    will-change: transform, opacity;
+  }
+
+  /* Break a child out of its centered column to span the full viewport width,
+     so a carousel's peeking neighbors reach the screen edges. The parent must be
+     horizontally centered (it is — the slide column is mx-auto). */
+  .full-bleed {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Reduced motion: a global brake. Individual systems also read the
+ * useReducedMotion hook, but this guarantees nothing animates if JS misses.
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

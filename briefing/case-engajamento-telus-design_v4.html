@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identidade Diluída · Engajamento Design LATAM (TELUS Digital)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum:#4B286D;          /* TELUS roxo */
+    --plum-deep:#2A1640;     /* profundidade */
+    --plum-ink:#1C1426;      /* texto base */
+    --paper:#F2F1EB;         /* fundo papel (marca) */
+    --paper-2:#EAE8DF;
+    --card:#FBFAF6;
+    --lime:#7FBF2E;          /* verde TELUS */
+    --lime-bright:#8CD211;
+    --teal:#1E9E72;          /* verde-vidro */
+    --teal-2:#3FBE8A;
+    --red:#C53A2B;           /* gap negativo */
+    --red-soft:#E08A7E;
+    --muted:#6A6275;
+    --line:rgba(28,20,38,.12);
+    --line-strong:rgba(28,20,38,.22);
+    --shadow:0 1px 0 rgba(28,20,38,.04), 0 18px 40px -28px rgba(42,22,64,.45);
+    --maxw:1120px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0;background:var(--paper);color:var(--plum-ink);
+    font-family:"Inter",system-ui,sans-serif;line-height:1.55;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:"Space Grotesk","Inter",sans-serif;letter-spacing:-.02em;line-height:1.04;margin:0}
+  .mono{font-family:"Space Mono",monospace}
+  a{color:inherit}
+  ::selection{background:var(--lime);color:var(--plum-deep)}
+
+  /* ---------- progress + nav ---------- */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;
+    background:var(--plum);transition:width .12s linear}
+  nav.dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:55;
+    display:flex;flex-direction:column;gap:14px}
+  nav.dots a{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--line-strong);
+    background:transparent;transition:.25s;position:relative}
+  nav.dots a:hover,nav.dots a.active{background:var(--plum);border-color:var(--plum);transform:scale(1.15)}
+  nav.dots a::after{content:attr(data-label);position:absolute;right:20px;top:50%;transform:translateY(-50%);
+    white-space:nowrap;font:600 11px/1 "Space Mono",monospace;color:var(--plum);
+    background:var(--card);padding:5px 9px;border:1px solid var(--line);border-radius:6px;
+    opacity:0;pointer-events:none;transition:.2s}
+  nav.dots a:hover::after{opacity:1}
+  @media (max-width:860px){nav.dots{display:none}}
+
+  /* ---------- layout shells ---------- */
+  section{position:relative;padding:92px 24px;max-width:var(--maxw);margin:0 auto}
+  @media (max-width:680px){section{padding:64px 18px}}
+  .eyebrow{font:700 12px/1 "Space Mono",monospace;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--teal);display:inline-flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--teal)}
+  .lead{font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--muted);max-width:62ch}
+  .chapnum{font:700 13px/1 "Space Mono",monospace;color:var(--plum);opacity:.55}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;max-width:var(--maxw);
+    margin:0 auto;padding:80px 24px 60px;position:relative;overflow:hidden}
+  .glass{position:absolute;inset:auto -14% -30% auto;width:min(520px,66vw);height:min(520px,66vw);
+    background:radial-gradient(circle at 38% 38%,rgba(127,191,46,.20),rgba(30,158,114,.15) 46%,transparent 72%);
+    filter:blur(12px);border-radius:48% 52% 56% 44%/52% 46% 54% 48%;z-index:0}
+  @media (prefers-reduced-motion:reduce){.hero .scroll-cue::after{animation:none}}
+  .hero>*{position:relative;z-index:1}
+  .hero h1{font-size:clamp(2.6rem,8.4vw,6.4rem);font-weight:700;margin:.28em 0 .12em;max-width:16ch}
+  .hero h1 .dim{color:var(--muted)}
+  .hero h1 .grow{color:var(--plum)}
+  .hero .kpi-strip{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:30px;font:600 13px/1.3 "Space Mono",monospace;color:var(--plum-deep)}
+  .hero .kpi-strip b{color:var(--teal)}
+  .hero .scroll-cue{margin-top:46px;font:600 12px/1 "Space Mono",monospace;color:var(--muted);
+    display:inline-flex;align-items:center;gap:10px;letter-spacing:.1em}
+  .hero .scroll-cue::after{content:"";width:1px;height:34px;background:linear-gradient(var(--plum),transparent);animation:cue 1.8s ease-in-out infinite}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+  .tagchip{display:inline-block;font:700 11px/1 "Space Mono",monospace;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--plum);background:rgba(75,40,109,.08);border:1px solid var(--line);padding:7px 12px;border-radius:999px}
+
+  /* ---------- generic cards/grids ---------- */
+  .grid{display:grid;gap:18px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  .panel h3{font-size:1.15rem;margin-bottom:6px}
+  .section-head{margin-bottom:38px}
+  .section-head h2{font-size:clamp(1.9rem,5vw,3.1rem);margin:14px 0 14px;max-width:20ch}
+
+  /* big stat */
+  .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px}
+  .stat .n{font:700 clamp(1.9rem,4.4vw,2.7rem)/1 "Space Grotesk";color:var(--plum)}
+  .stat .n.green{color:var(--teal)}
+  .stat .l{font-size:.82rem;color:var(--muted);margin-top:8px;line-height:1.35}
+  .stat .sub{font:600 11px/1 "Space Mono",monospace;color:var(--lime-bright);margin-top:8px;display:block}
+
+  /* ---------- dilution viz ---------- */
+  .dilution{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}
+  @media (max-width:760px){.dilution{grid-template-columns:1fr}}
+  .nest{position:relative;aspect-ratio:1;width:100%;max-width:440px;margin:0 auto;
+    display:flex;align-items:center;justify-content:center}
+  .ring{position:absolute;border-radius:50%;display:flex;align-items:flex-start;justify-content:center;
+    border:1.5px solid var(--line-strong);transition:.3s;cursor:default}
+  .ring span{font:700 10px/1 "Space Mono",monospace;color:var(--plum-deep);background:var(--paper);
+    padding:3px 7px;border-radius:6px;margin-top:-9px;white-space:nowrap;border:1px solid var(--line)}
+  .ring.r1{inset:0;background:radial-gradient(circle at 50% 30%,rgba(75,40,109,.07),transparent 70%)}
+  .ring.r2{inset:14%;background:rgba(75,40,109,.05)}
+  .ring.r3{inset:30%;background:rgba(30,158,114,.07)}
+  .ring.r4{inset:44%;background:rgba(30,158,114,.12)}
+  .ring.r5{inset:57%;background:var(--lime);border-color:var(--lime-bright);box-shadow:0 0 0 4px rgba(140,210,17,.25)}
+  .ring.r5 span{background:var(--plum-deep);color:#fff;border-color:transparent;margin-top:0;align-self:center}
+  .ring.r5{align-items:center}
+  .ring:hover{border-color:var(--plum)}
+  .dilution .legend li{list-style:none;display:flex;justify-content:space-between;gap:12px;
+    padding:11px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+  .dilution .legend li b{font-family:"Space Mono",monospace;color:var(--plum)}
+  .dilution .legend li .tier{color:var(--muted);font-size:.78rem}
+  .dilution .legend{padding:0;margin:0}
+
+  /* ---------- timeline ---------- */
+  .timeline{position:relative;margin-top:36px;padding-left:4px}
+  .timeline::before{content:"";position:absolute;left:18px;top:6px;bottom:6px;width:2px;
+    background:rgba(75,40,109,.28)}
+  .tl-item{position:relative;padding:0 0 26px 52px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-dot{position:absolute;left:10px;top:2px;width:18px;height:18px;border-radius:50%;
+    background:var(--card);border:3px solid var(--plum)}
+  .tl-year{font:700 14px/1 "Space Mono",monospace;color:var(--plum)}
+  .tl-item h4{margin:6px 0 4px;font-family:"Space Grotesk";font-size:1.05rem}
+  .tl-item p{margin:0;color:var(--muted);font-size:.92rem;max-width:54ch}
+
+  /* ---------- paradox ---------- */
+  .paradox{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  @media (max-width:680px){.paradox{grid-template-columns:1fr}}
+  .par-col{border-radius:16px;padding:24px;border:1px solid var(--line)}
+  .par-col.good{background:var(--card);border-color:var(--line);border-left:3px solid var(--teal)}
+  .par-col.bad{background:var(--card);border-color:var(--line);border-left:3px solid var(--red)}
+  .par-col .tag{font:700 11px/1 "Space Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+  .par-col.good .tag{color:var(--teal)}
+  .par-col.bad .tag{color:var(--red)}
+  .par-col h3{margin:10px 0 16px;font-size:1.2rem}
+  .minirow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:.86rem}
+  .minirow .mbar{flex:1;height:8px;border-radius:99px;background:var(--paper-2);overflow:hidden}
+  .minirow .mfill{height:100%;border-radius:99px;width:0;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+  .good .mfill{background:var(--teal)}
+  .bad .mfill{background:var(--red)}
+  .minirow .mval{font:700 12px/1 "Space Mono",monospace;width:34px;text-align:right}
+  .good .mval{color:var(--teal)} .bad .mval{color:var(--red)}
+  .par-bridge{text-align:center;margin:22px auto 0;max-width:60ch;font-size:1rem;color:var(--plum-deep)}
+  .par-bridge b{color:var(--plum)}
+
+  /* ---------- chart: dimensions ---------- */
+  .chart-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .toggle{font:600 12px/1 "Space Mono",monospace;padding:9px 14px;border-radius:99px;cursor:pointer;
+    border:1px solid var(--line-strong);background:transparent;color:var(--plum-deep);transition:.2s}
+  .toggle:hover{border-color:var(--plum)}
+  .toggle.active{background:var(--plum);color:#fff;border-color:var(--plum)}
+  .toggle:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+  .dimrow{display:grid;grid-template-columns:190px 1fr 56px;align-items:center;gap:12px;padding:7px 0;font-size:.86rem}
+  @media (max-width:600px){.dimrow{grid-template-columns:130px 1fr 46px;font-size:.78rem}}
+  .dimrow .dname{color:var(--plum-ink);font-weight:500;line-height:1.2}
+  .dimtrack{position:relative;height:22px;background:var(--paper-2);border-radius:6px;overflow:hidden}
+  .dimtrack.diverge{background:transparent}
+  .dimtrack.diverge::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line-strong)}
+  .dimfill{position:absolute;top:0;bottom:0;border-radius:6px;transition:all .8s cubic-bezier(.2,.7,.2,1)}
+  .dimval{font:700 12px/1 "Space Mono",monospace;text-align:right}
+
+  /* ---------- say/stay/strive ---------- */
+  .sss{margin-top:6px}
+  .sssrow{display:grid;grid-template-columns:74px 1fr;gap:14px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}
+  .sssrow:first-child{border-top:none}
+  .sss-cat{font:700 11px/1.2 "Space Mono",monospace;letter-spacing:.06em;padding:6px 8px;border-radius:7px;text-align:center}
+  .cat-SAY{background:rgba(75,40,109,.12);color:var(--plum)}
+  .cat-STAY{background:rgba(30,158,114,.16);color:var(--teal)}
+  .cat-STRIVE{background:rgba(140,210,17,.22);color:#5a8a14}
+  .sss-body .q{font-size:.92rem;margin-bottom:7px}
+  .sss-bars{display:flex;align-items:center;gap:12px}
+  .sss-fav{position:relative;flex:1;height:14px;background:var(--paper-2);border-radius:99px;overflow:hidden}
+  .sss-fav i{position:absolute;left:0;top:0;bottom:0;background:var(--plum);border-radius:99px;width:0;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+  .sss-favn{font:700 12px/1 "Space Mono",monospace;width:34px}
+  .sss-gap{font:700 12px/1 "Space Mono",monospace;color:var(--red);width:54px;text-align:right}
+
+  /* ---------- quotes ---------- */
+  .quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:8px}
+  .quote{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative}
+  .quote::before{content:"\201C";font-family:Georgia,serif;font-size:3.4rem;color:var(--lime-bright);line-height:.6;display:block;margin-bottom:6px}
+  .quote p{margin:0;font-style:italic;font-size:.94rem;color:var(--plum-ink)}
+  .quote .src{display:block;margin-top:14px;font:600 11px/1 "Space Mono",monospace;color:var(--muted);font-style:normal}
+
+  /* ---------- caveat / asterisk ---------- */
+  .caveat{margin-top:26px;border:1px dashed var(--line-strong);border-radius:16px;padding:24px;background:rgba(75,40,109,.035)}
+  .caveat h3{display:flex;align-items:center;gap:10px;font-size:1.05rem}
+  .caveat h3 .ast{color:var(--red);font-family:"Space Mono",monospace}
+  .caveat ul{margin:14px 0 0;padding-left:0;list-style:none;display:grid;gap:8px}
+  .caveat li{display:flex;gap:10px;font-size:.9rem;color:var(--plum-ink)}
+  .caveat li .x{font:700 12px/1.4 "Space Mono",monospace;color:var(--red);flex-shrink:0}
+  .caveat .note{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.92rem;color:var(--plum-deep)}
+  .caveat .note b{color:var(--teal)}
+
+  /* ---------- leadership tension ---------- */
+  .tension{margin-top:26px;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+  .tension .top{background:var(--plum-deep);color:#fff;padding:30px 26px}
+  .tension .top .big{font:700 clamp(1.4rem,4vw,2rem)/1.05 "Space Grotesk"}
+  .tension .top .big em{color:var(--lime-bright);font-style:normal}
+  .tension .top p{margin:14px 0 0;color:rgba(255,255,255,.78);font-size:.92rem;max-width:70ch}
+  .tension .bottom{padding:22px 26px;background:var(--card)}
+  .tension .bottom p{margin:0;font-size:.95rem}
+  .tension .bottom .label{font:700 11px/1 "Space Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--red);display:block;margin-bottom:8px}
+
+  /* ---------- debate cards ---------- */
+  .debate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:8px}
+  details.dcard{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    transition:border-color .25s,box-shadow .25s}
+  details.dcard[open]{border-color:var(--plum);box-shadow:var(--shadow)}
+  details.dcard summary{list-style:none;cursor:pointer;padding:22px;display:flex;flex-direction:column;gap:12px;position:relative}
+  details.dcard summary::-webkit-details-marker{display:none}
+  summary:focus-visible{outline:3px solid var(--lime);outline-offset:-3px}
+  .dcard .dtop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .dcard .dn{font:700 13px/1 "Space Mono",monospace;color:var(--plum);background:rgba(75,40,109,.08);
+    width:30px;height:30px;border-radius:8px;display:grid;place-items:center}
+  .dcard .dtheme{font:700 10px/1.2 "Space Mono",monospace;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--teal);text-align:right}
+  .dcard .dq{font-family:"Space Grotesk";font-weight:600;font-size:1.06rem;line-height:1.25}
+  .dcard .dhint{font:600 11px/1 "Space Mono",monospace;color:var(--muted);display:inline-flex;align-items:center;gap:7px;margin-top:2px}
+  .dcard .dhint .chev{transition:transform .25s}
+  details[open] .dhint .chev{transform:rotate(90deg)}
+  .dcard .dbody{padding:0 22px 22px;border-top:1px solid var(--line);margin-top:2px;animation:slideD .3s ease}
+  @keyframes slideD{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .dlens{margin-top:16px}
+  .dlens .ll{font:700 11px/1 "Space Mono",monospace;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+  .dlens.a .ll{color:var(--teal)} .dlens.b .ll{color:var(--red)}
+  .dlens p{margin:0 0 4px;font-size:.9rem;color:var(--plum-ink)}
+  .dtheory{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:.84rem;color:var(--muted)}
+  .dtheory b{color:var(--plum)}
+
+  /* ---------- conclusion ---------- */
+  .diag{background:var(--plum-deep);color:#fff;border-radius:20px;padding:38px 30px;position:relative;overflow:hidden}
+  .diag .glass2{position:absolute;right:-10%;top:-34%;width:280px;height:280px;
+    background:radial-gradient(circle,rgba(127,191,46,.14),transparent 70%);filter:blur(10px)}
+  .diag h3{position:relative;font-size:clamp(1.4rem,3.6vw,2rem);max-width:24ch}
+  .diag h3 em{color:var(--lime-bright);font-style:normal}
+  .diag p{position:relative;color:rgba(255,255,255,.8);margin-top:14px;max-width:64ch}
+
+  .moves{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:26px}
+  .move{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative;overflow:hidden}
+  .move .mn{font:700 12px/1 "Space Mono",monospace;color:#fff;background:var(--plum);width:34px;height:34px;
+    border-radius:9px;display:grid;place-items:center;margin-bottom:14px}
+  .move h4{font-family:"Space Grotesk";font-size:1.04rem;margin:0 0 8px}
+  .move p{margin:0;font-size:.9rem;color:var(--muted)}
+  .move .mtag{display:inline-block;margin-top:12px;font:600 10px/1.3 "Space Mono",monospace;color:var(--teal);letter-spacing:.03em}
+
+  /* referenciais teóricos */
+  .theory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:16px;margin-top:8px}
+  .tcard{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--plum);border-radius:14px;padding:22px}
+  .tcard .aula{font:700 11px/1 "Space Mono",monospace;letter-spacing:.06em;color:var(--teal);text-transform:uppercase}
+  .tcard h4{font-family:"Space Grotesk";font-size:1.02rem;margin:10px 0 8px}
+  .tcard p{margin:0;font-size:.87rem;color:var(--muted)}
+  .tcard .fw{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+  .tcard .fw span{font:600 10px/1 "Space Mono",monospace;padding:6px 8px;border-radius:6px;background:rgba(75,40,109,.07);color:var(--plum-deep)}
+
+  .nextsteps{margin-top:30px}
+  .ns-row{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start;padding:16px 0;border-top:1px solid var(--line)}
+  @media (max-width:560px){.ns-row{grid-template-columns:1fr;gap:4px}}
+  .ns-when{font:700 12px/1.3 "Space Mono",monospace;color:var(--teal)}
+  .ns-what b{font-family:"Space Grotesk"}
+  .ns-what p{margin:4px 0 0;font-size:.9rem;color:var(--muted)}
+
+  footer{max-width:var(--maxw);margin:0 auto;padding:48px 24px 70px;border-top:1px solid var(--line);
+    font-size:.82rem;color:var(--muted)}
+  footer b{color:var(--plum)}
+
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .pill{font:600 12px/1 "Space Mono",monospace;padding:8px 13px;border-radius:99px;border:1px solid var(--line);color:var(--plum-deep)}
+  .pill.alert{border-color:var(--red);color:var(--red)}
+  .pill.win{border-color:var(--teal);color:var(--teal)}
+
+  .divider-label{font:700 12px/1 "Space Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:34px 0 14px}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<nav class="dots" aria-label="Navegação de seções">
+  <a href="#hero" data-label="Início" class="active"></a>
+  <a href="#empresa" data-label="01 · A Empresa"></a>
+  <a href="#problema" data-label="02 · O Problema"></a>
+  <a href="#debate" data-label="03 · Debate"></a>
+  <a href="#conclusao" data-label="04 · Conclusões"></a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="hero">
+  <div class="glass" aria-hidden="true"></div>
+  <span class="tagchip">Estudo de caso · Gestão de Pessoas</span>
+  <h1><span class="dim">De cem para</span> <span class="grow" id="heroBig">140 mil</span> <span class="dim">— e a identidade que se diluiu.</span></h1>
+  <p class="lead">Em quatro anos, um estúdio de design de Porto Alegre (Poatek) foi absorvido por sucessivas aquisições até virar uma célula de 41 pessoas dentro de um corpo global de mais de 140 mil. O Pulsecheck de 2025 mostra o preço dessa diluição: <strong style="color:var(--plum)">engajamento de 40% — quartil inferior do mercado</strong>, enquanto a confiança no time imediato segue no topo.</p>
+  <div class="kpi-strip">
+    <span>Engajamento <b>40%</b></span>
+    <span>Segurança p/ se posicionar <b>30%</b></span>
+    <span>Apoio do gestor direto <b>100%</b></span>
+    <span>Amostra <b>20 respostas</b></span>
+  </div>
+  <span class="scroll-cue">role para começar</span>
+</header>
+
+<!-- ============ 01 · A EMPRESA ============ -->
+<section id="empresa">
+  <div class="section-head rv">
+    <span class="chapnum">01 — Contexto</span>
+    <span class="eyebrow" style="margin-left:14px">A empresa</span>
+    <h2>Uma célula local dentro de um gigante global</h2>
+    <p class="lead">O recorte analisado é a área de <strong>Design LATAM</strong> — operada no Brasil pela <strong>Poatek</strong>. Para ler os dados é preciso entender onde ela está na estrutura: muito apoio do time próximo, pouca conexão com o todo.</p>
+  </div>
+
+  <div class="panel rv">
+    <div class="dilution">
+      <div class="nest" aria-label="Diagrama de diluição da estrutura">
+        <div class="ring r1"><span>TELUS · grupo global</span></div>
+        <div class="ring r2"><span>TELUS Digital · ~70k</span></div>
+        <div class="ring r3"><span>Digital Agency · 965</span></div>
+        <div class="ring r4"><span>Design · 124</span></div>
+        <div class="ring r5"><span>Design LATAM · 41</span></div>
+      </div>
+      <ul class="legend">
+        <li><span>TELUS <span class="tier">corpo de trabalho global, mundo todo</span></span><b>~140.000</b></li>
+        <li><span>TELUS Digital <span class="tier">unidade digital</span></span><b>~70.000</b></li>
+        <li><span>Digital Agency <span class="tier">divisão</span></span><b>965</b></li>
+        <li><span>Design <span class="tier">prática</span></span><b>124</b></li>
+        <li><span>Design LATAM (Poatek) <span class="tier">recorte da pesquisa</span></span><b>41</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="divider-label rv">A trajetória de aquisições</h3>
+  <div class="panel rv">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2021</div>
+        <h4>Poatek é adquirida pela WillowTree</h4>
+        <p>Uma pequena empresa de desenvolvimento de software de Porto Alegre, com pouco mais de 100 pessoas e identidade própria, entra em um grupo maior.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2022</div>
+        <h4>WillowTree é adquirida pela TELUS International</h4>
+        <p>Segunda camada de integração: novos sistemas, novo headcount, adequação cultural a uma operação internacional.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2025</div>
+        <h4>TELUS International vira TELUS Digital — e fecha o capital</h4>
+        <p>A privatização é concluída pela TELUS (sócia majoritária). É o ano com <strong>mais mudanças</strong>: sistemas, liderança, cultura. A identidade local fica fortemente diluída.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="divider-label rv">A saúde do negócio (TELUS Digital · 2025)</h3>
+  <div class="statgrid rv">
+    <div class="stat"><div class="n green" data-count="2.8" data-suffix="B" data-prefix="US$ " data-dec="1">US$ 0</div><div class="l">Receita do ano</div><span class="sub">+5% vs. 2024</span></div>
+    <div class="stat"><div class="n" data-count="714" data-prefix="US$ " data-suffix="M">US$ 0</div><div class="l">Receita do 4º trimestre</div><span class="sub">+3% no trimestre e no ano</span></div>
+    <div class="stat"><div class="n" data-count="13.7" data-suffix="%" data-dec="1">0%</div><div class="l">Margem EBITDA ajustada (Q4)</div><span class="sub">vs. 11,1% no trimestre anterior</span></div>
+    <div class="stat"><div class="n green" data-count="60" data-suffix="+">0</div><div class="l">Novos clientes no ano</div><span class="sub">novas indústrias e geografias</span></div>
+  </div>
+  <p class="lead rv" style="margin-top:18px;font-size:1rem">O negócio cresce e dá lucro. <strong style="color:var(--plum)">O problema não é financeiro — é de gente.</strong> E justamente por isso ele tende a ficar invisível em decks de resultado.</p>
+</section>
+
+<!-- ============ 02 · O PROBLEMA ============ -->
+<section id="problema">
+  <div class="section-head rv">
+    <span class="chapnum">02 — Diagnóstico</span>
+    <span class="eyebrow" style="margin-left:14px">O problema</span>
+    <h2>Engajamento no quartil inferior — e um paradoxo no meio</h2>
+    <p class="lead">O Pulsecheck mede engajamento por três comportamentos: <strong>falar bem (Say)</strong>, <strong>querer ficar (Stay)</strong> e <strong>se esforçar além (Strive)</strong>. O resultado coloca a área abaixo de 60% — a faixa do quartil inferior do benchmark global.</p>
+  </div>
+
+  <div class="grid rv" style="grid-template-columns:0.8fr 1.2fr;gap:18px">
+    <div class="panel" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+      <div style="font:700 clamp(3.4rem,12vw,5.4rem)/1 'Space Grotesk';color:var(--red)" data-count="40" data-suffix="%">0%</div>
+      <div style="font:600 13px/1.4 'Space Mono',monospace;color:var(--muted);margin-top:8px">Score geral de engajamento</div>
+      <div style="margin-top:18px;width:100%;max-width:300px">
+        <div style="height:14px;border-radius:99px;background:linear-gradient(90deg,var(--red) 0 60%,#E4B53C 60% 77%,var(--plum) 77% 100%);position:relative">
+          <div style="position:absolute;left:40%;top:-7px;width:2px;height:28px;background:var(--plum-ink)"></div>
+          <div style="position:absolute;left:40%;top:-26px;transform:translateX(-50%);font:700 11px/1 'Space Mono',monospace">40%</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font:600 9px/1.4 'Space Mono',monospace;color:var(--muted);margin-top:8px">
+          <span>Inferior · 0–60</span><span>Moderado · 60–77</span><span>Topo · 77–100</span>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Distribuição do engajamento</h3>
+      <p style="color:var(--muted);font-size:.88rem;margin:.2em 0 18px">60% das pessoas estão <strong style="color:var(--red)">passivas ou ativamente desengajadas</strong>. Apenas 1 em cada 4 está altamente engajada.</p>
+      <div id="distChart"></div>
+    </div>
+  </div>
+
+  <!-- paradox -->
+  <h3 class="divider-label rv">O paradoxo central — micro forte, macro fraco</h3>
+  <div class="rv">
+    <div class="paradox">
+      <div class="par-col good">
+        <span class="tag">O que está forte · o time imediato</span>
+        <h3>Confiança no gestor e nos colegas</h3>
+        <div class="minirow"><span style="flex:0 0 56%">Apoio do meu gestor para ter sucesso</span><span class="mbar"><i class="mfill" data-w="100"></i></span><span class="mval">100</span></div>
+        <div class="minirow"><span style="flex:0 0 56%">Colegas respeitam meus pensamentos</span><span class="mbar"><i class="mfill" data-w="100"></i></span><span class="mval">100</span></div>
+        <div class="minirow"><span style="flex:0 0 56%">Gestor me incentiva a inovar</span><span class="mbar"><i class="mfill" data-w="95"></i></span><span class="mval">95</span></div>
+        <div class="minirow"><span style="flex:0 0 56%">Somos francos e honestos entre nós</span><span class="mbar"><i class="mfill" data-w="90"></i></span><span class="mval">90</span></div>
+      </div>
+      <div class="par-col bad">
+        <span class="tag">O que está fraco · a instituição</span>
+        <h3>Conexão com a empresa como um todo</h3>
+        <div class="minirow"><span style="flex:0 0 56%">É seguro me posicionar sem medo</span><span class="mbar"><i class="mfill" data-w="30"></i></span><span class="mval">30</span></div>
+        <div class="minirow"><span style="flex:0 0 56%">Sou motivado pelos valores da empresa</span><span class="mbar"><i class="mfill" data-w="30"></i></span><span class="mval">30</span></div>
+        <div class="minirow"><span style="flex:0 0 56%">Entendo meu programa de remuneração</span><span class="mbar"><i class="mfill" data-w="35"></i></span><span class="mval">35</span></div>
+        <div class="minirow"><span style="flex:0 0 56%">Tenho senso de realização no trabalho</span><span class="mbar"><i class="mfill" data-w="45"></i></span><span class="mval">45</span></div>
+      </div>
+    </div>
+    <p class="par-bridge">As pessoas confiam em quem está perto, mas <b>perderam o vínculo com o que está acima</b>. Um bom gestor está segurando o time — só que sobre uma base institucional que não sustenta sozinha.</p>
+  </div>
+
+  <!-- dimensions chart -->
+
+
+  <!-- say stay strive -->
+  <h3 class="divider-label rv">Say · Stay · Strive — onde a perda dói mais</h3>
+  <div class="panel rv">
+    <div class="sss" id="sssChart"></div>
+    <p style="font:600 11px/1.4 'Space Mono',monospace;color:var(--muted);margin-top:14px">As pessoas até <strong>recomendam</strong> a empresa (Say · 75%), mas <strong>não querem ficar</strong> (Stay · 25%, gap −49) e <strong>não se sentem inspiradas</strong> a fazer mais (Strive · 30%, gap −45). Marca empregadora descolada da experiência real. <strong style="color:var(--plum)">Ressalva:</strong> parte dessa baixa intenção de ficar pode ser reajuste de perfil (boutique → escala), não só insatisfação — retomamos nas conclusões.</p>
+  </div>
+
+  <!-- comments -->
+  <h3 class="divider-label rv">O que as pessoas escreveram</h3>
+  <div class="quotes rv">
+    <div class="quote"><p>Um <strong>framework de progressão de carreira</strong> mais claro, com expectativas definidas por nível, apoiaria o desenvolvimento e o crescimento de longo prazo.</p><span class="src">— sobre clareza</span></div>
+    <div class="quote"><p>A <strong>falta de transparência</strong> na comunicação gera incerteza, especulação entre colegas, reduz a confiança na liderança e compromete a cultura.</p><span class="src">— sobre clareza</span></div>
+    <div class="quote"><p>Às vezes é difícil falar abertamente porque <strong>as reações a perguntas ou opiniões diferentes podem ser bem defensivas</strong>. Isso me deixa hesitante em desafiar ideias.</p><span class="src">— sobre se posicionar</span></div>
+    <div class="quote"><p>O que mais valorizo é a <strong>forte cultura de colaboração</strong>, que nos permite aprender uns com os outros continuamente.</p><span class="src">— sobre cultura (positivo)</span></div>
+  </div>
+
+  <!-- caveat -->
+  <div class="caveat rv">
+    <h3><span class="ast">＊</span> Leia o dado com honestidade: a amostra tem asteriscos</h3>
+    <p style="color:var(--muted);font-size:.92rem;margin:.4em 0 0">Antes de tirar conclusões duras, é preciso reconhecer os limites metodológicos — e isso é parte do trabalho de gestão de pessoas, não uma desculpa para ignorar o resultado.</p>
+    <ul>
+      <li><span class="x">−</span><span>Apenas <strong>20 respostas</strong> no recorte — amostra pequena e sensível a poucos indivíduos.</span></li>
+      <li><span class="x">−</span><span>A <strong>forma de medir mudou de 2024 para 2025</strong> (escala 1–5 → % favorável + benchmark "Global Top 25%"). Comparação direta com o histórico é arriscada.</span></li>
+      <li><span class="x">−</span><span>Exclusões: estagiários, pessoas com menos de 3 meses de casa, e o escritório da Argentina (aquisição da GM2 no meio de 2025) não entraram no recorte.</span></li>
+      <li><span class="x">−</span><span>Parte dos resultados de outra diretoria caiu por <strong>erro de sistema</strong>.</span></li>
+    </ul>
+    <p class="note"><b>Porém:</b> o sentimento captado nas reuniões pós-report converge com os números. A fragilidade estatística pede cautela na precisão, mas <strong>o diagnóstico qualitativo confirma a direção</strong>. Triangular dado + escuta é o caminho.</p>
+  </div>
+
+  <!-- leadership tension -->
+  <h3 class="divider-label rv">A mensagem da liderança — e a tensão que ela carrega</h3>
+  <div class="tension rv">
+    <div class="top">
+      <div class="big">"Também é <em>sua responsabilidade</em> resolver isso."</div>
+      <p>"Não vamos mudar uma organização de 100 mil+ pessoas. Mas moldamos nosso entorno. Eu não consigo consertar isso sozinho — preciso da sua ajuda." A liderança assume a culpa ("ninguém é culpado, exceto eu") e promete que ninguém será punido pela honestidade.</p>
+    </div>
+    <div class="bottom">
+      <span class="label">Ponto de atenção para a turma</span>
+      <p>A mensagem é honesta e mobilizadora — mas vem <strong>logo depois</strong> de as pessoas dizerem que não se sentem seguras para falar. Pedir que elas "resolvam" pode soar como empoderamento <em>ou</em> como transferência de responsabilidade. A intenção é boa; o timing e o enquadramento merecem cuidado.</p>
+    </div>
+  </div>
+
+  <h3 class="divider-label rv">Leitura pelos referenciais da disciplina</h3>
+  <div class="theory-grid rv">
+    <div class="tcard">
+      <span class="aula">Aula 7 · Gestão de Carreiras</span>
+      <h4>Carreira proteana e diluição de propósito</h4>
+      <p>As trocas sucessivas de gestão retiraram o protagonismo do profissional e a âncora de carreira que existia na fase boutique. O plano Y/W já está implementado — então o gap real não é estrutura de carreira, e sim capacitação para a nova escala (ver Aula 5).</p>
+      <div class="fw"><span>Carreira proteana</span><span>Âncora de carreira</span><span>Y &amp; W (já existe)</span></div>
+    </div>
+    <div class="tcard">
+      <span class="aula">Aula 6 · Avaliação de Desempenho</span>
+      <h4>Resultados + comportamento, interrompidos</h4>
+      <p>A integração quebrou os ciclos de feedback e a avaliação virou puramente métrica. Sem segurança psicológica para expor preocupações, o colaborador sente que não é avaliado de forma justa — o que derruba o pilar Strive e o reconhecimento (52%).</p>
+      <div class="fw"><span>Resultados + comportamento</span><span>Matriz 9-Box</span><span>Feedback 360º</span></div>
+    </div>
+    <div class="tcard">
+      <span class="aula">Aula 5 · Treinamento &amp; Desenvolvimento</span>
+      <h4>Sustentação que faltou para a escala</h4>
+      <p>O salto de boutique para escala global exigia preparar a liderança para gerir times maiores sem perder a proximidade, e mentoria para preservar o conhecimento cultural da Poatek. Esse vácuo de competências comportamentais é a raiz do "estou sobrecarregado, não capacitado".</p>
+      <div class="fw"><span>Kirkpatrick</span><span>Andragogia</span><span>Mentoring</span></div>
+    </div>
+    <div class="tcard">
+      <span class="aula">Aula 3 · Atração &amp; Seleção</span>
+      <h4>EVP descolado da experiência real</h4>
+      <p>A promessa vendida era "experiência de boutique"; a realidade virou "operação de escala". Sem realinhar o EVP e o Employer Branding, a empresa segue atraindo perfis que buscam uma cultura que não existe mais — alimentando o ciclo de turnover.</p>
+      <div class="fw"><span>EVP</span><span>Employer Branding</span><span>Contrato psicológico</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · DEBATE ============ -->
+<section id="debate">
+  <div class="section-head rv">
+    <span class="chapnum">03 — Provocação</span>
+    <span class="eyebrow" style="margin-left:14px">Questões para a turma</span>
+    <h2>Quatro perguntas para abrir o debate</h2>
+    <p class="lead">Não há resposta única. Cada card traz uma tensão real do caso e <strong>duas lentes opostas</strong> para a sala defender. Toque para expandir.</p>
+  </div>
+
+  <div class="debate-grid rv">
+    <details class="dcard">
+      <summary>
+        <div class="dtop"><span class="dn">1</span><span class="dtheme">Segurança psicológica</span></div>
+        <div class="dq">Como pedir "fale abertamente" e dizer "é sua responsabilidade" para quem acabou de dizer que tem medo de falar?</div>
+        <span class="dhint"><span class="chev">▸</span> ver as duas lentes</span>
+      </summary>
+      <div class="dbody">
+        <div class="dlens a"><div class="ll">Lente A · empoderamento</div><p>Dar voz e agência é exatamente o que destrava a segurança psicológica. Esperar a empresa "consertar" primeiro mantém todos passivos.</p></div>
+        <div class="dlens b"><div class="ll">Lente B · transferência de responsabilidade</div><p>Segurança psicológica é criada por quem tem poder. Devolver o problema a quem se sente vulnerável pode aprofundar o silêncio.</p></div>
+        <div class="dtheory"><b>No dado:</b> "é seguro me posicionar sem medo" tem 30% favorável e gap −51 — o pior item de toda a pesquisa.</div>
+      </div>
+    </details>
+
+    <details class="dcard">
+      <summary>
+        <div class="dtop"><span class="dn">2</span><span class="dtheme">Time vs. instituição</span></div>
+        <div class="dq">Até onde um bom gestor consegue blindar o time de uma cultura organizacional diluída?</div>
+        <span class="dhint"><span class="chev">▸</span> ver as duas lentes</span>
+      </summary>
+      <div class="dbody">
+        <div class="dlens a"><div class="ll">Lente A · o gestor é o que importa</div><p>Com apoio do gestor em 100%, o microambiente protege e o time aguenta — o que está perto é o que segura as pessoas.</p></div>
+        <div class="dlens b"><div class="ll">Lente B · é insustentável</div><p>Stay em 25% e Strive em 30% mostram que a blindagem tem limite. Sem vínculo institucional, o esforço do gestor vira contenção de danos, não engajamento.</p></div>
+        <div class="dtheory"><b>Para fundamentar:</b> apoio do gestor 100% (+16 vs. benchmark) convivendo com valores em 30% (−46). O bom líder está segurando — por quanto tempo?</div>
+      </div>
+    </details>
+
+    <details class="dcard">
+      <summary>
+        <div class="dtop"><span class="dn">3</span><span class="dtheme">M&A e cultura</span></div>
+        <div class="dq">A diluição de identidade em aquisições sucessivas é inevitável — ou foi falha de gestão da mudança?</div>
+        <span class="dhint"><span class="chev">▸</span> ver as duas lentes</span>
+      </summary>
+      <div class="dbody">
+        <div class="dlens a"><div class="ll">Lente A · custo natural da escala</div><p>Integrar 100 pessoas a 140 mil exige padronização. Alguma perda de identidade é o preço de acessar recursos, clientes e estabilidade.</p></div>
+        <div class="dlens b"><div class="ll">Lente B · negligência cultural</div><p>Três integrações em quatro anos sem cuidar de cultura e comunicação não é destino — é escolha. Due diligence cultural costuma ficar para depois.</p></div>
+        <div class="dtheory"><b>No contexto:</b> três integrações em quatro anos; 2025 foi descrito como "o ano com mais mudanças", com forte diluição da identidade local.</div>
+      </div>
+    </details>
+
+    <details class="dcard">
+      <summary>
+        <div class="dtop"><span class="dn">4</span><span class="dtheme">Turnover: até onde vale lutar?</span></div>
+        <div class="dq">A empresa sabe distinguir quem está saindo por quê — e age diferente em cada caso?</div>
+        <span class="dhint"><span class="chev">▸</span> ver as duas lentes</span>
+      </summary>
+      <div class="dbody">
+        <div class="dlens a"><div class="ll">Lente A · toda saída é perda</div><p>Perder gente qualificada tem custo alto de reposição e impacto na entrega. O sinal do Stay em 25% é um alerta cultural que precisa ser tratado — não normalizado.</p></div>
+        <div class="dlens b"><div class="ll">Lente B · nem toda saída é falha</div><p>Há dois tipos de turnover aqui: quem saiu porque a empresa mudou e o contrato implícito foi quebrado (reajuste esperado) — e quem sairia mas deveria ficar, porque se encaixa no novo perfil e está indo por falta de segurança, remuneração opaca ou ausência de perspectiva. Tratá-los da mesma forma é o erro. O trabalho real é separar os dois — e só reter quem faz sentido reter.</p></div>
+        <div class="dtheory"><b>A pergunta que o RH provavelmente não consegue responder hoje:</b> do turnover recente, quanto foi reajuste de perfil boutique → escala, e quanto foi perda evitável? Sem essa distinção, a empresa ora retém quem não quer ficar, ora perde quem deveria. Retenção nunca foi problema aqui — talvez a métrica certa não seja "quantos saem", e sim "quem sai e por quê".</div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 04 · CONCLUSÃO ============ -->
+<section id="conclusao">
+  <div class="section-head rv">
+    <span class="chapnum">04 — Direcionamento</span>
+    <span class="eyebrow" style="margin-left:14px">Conclusões e próximos passos</span>
+    <h2>O diagnóstico e para onde apontamos</h2>
+  </div>
+
+  <div class="diag rv">
+    <div class="glass2" aria-hidden="true"></div>
+    <h3>O problema não é o time — é o <em>contrato psicológico</em> com a empresa. A confiança local está intacta; o que se rompeu foi o vínculo de sentido, segurança e clareza com a instituição depois de anos de mudança e diluição da identidade da Poatek.</h3>
+    <p>A boa notícia: a fundação humana mais difícil de construir — relação de confiança com gestor e pares — ainda está de pé. É a partir dela que se reconstrói o resto.</p>
+  </div>
+
+
+
+  <h3 class="divider-label rv">Próximos passos (do deck, com nossa leitura)</h3>
+  <div class="nextsteps rv">
+    <div class="ns-row"><div class="ns-when">Agora</div><div class="ns-what"><b>Digerir os resultados</b><p>Quatro focos: segurança psicológica, entender (e questionar) os valores, decifrar a estrutura/comunicação corporativa e melhorar o reconhecimento.</p></div></div>
+    <div class="ns-row"><div class="ns-when">Próximas semanas</div><div class="ns-what"><b>Brainstorms locais</b><p>"Dores locais, soluções locais." Aqui mora o risco de fugir do superficial — o desafio é atacar uma ou duas causas de raiz, não cobrir tudo de leve.</p></div></div>
+    <div class="ns-row"><div class="ns-when">Início de janeiro</div><div class="ns-what"><b>Planos regionais</b><p>Decks compilados, defendidos upstream e executados. Compromissos em três níveis: consigo mesmo, com o grupo e com o negócio.</p></div></div>
+    <div class="ns-row"><div class="ns-when">2026</div><div class="ns-what"><b>Compromissos nos objetivos</b><p>Refletir as ações nos objetivos individuais de 2026 — para que o plano não morra na apresentação.</p></div></div>
+  </div>
+
+  <div class="pill-row rv" style="margin-top:30px">
+    <span class="pill win">Ativo a proteger: confiança no gestor (100%)</span>
+    <span class="pill win">Ativo a proteger: cultura de colaboração</span>
+    <span class="pill alert">Urgência nº 1: segurança psicológica (30%)</span>
+    <span class="pill alert">Turnover: separar saída saudável de perda crítica</span>
+  </div>
+</section>
+
+
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* progress bar */
+  var prog = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max>0 ? (h.scrollTop||document.body.scrollTop)/max*100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* reveal */
+  var rvs = document.querySelectorAll('.rv');
+  if(reduce){ rvs.forEach(function(e){e.classList.add('in')}); }
+  else{
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.12});
+    rvs.forEach(function(e){io.observe(e)});
+  }
+
+  /* count-up */
+  function animateCount(el){
+    var target = parseFloat(el.dataset.count);
+    var dec = parseInt(el.dataset.dec||'0',10);
+    var pre = el.dataset.prefix||''; var suf = el.dataset.suffix||'';
+    if(reduce){ el.textContent = pre + target.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}) + suf; return; }
+    var start = null, dur = 1400;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts-start)/dur,1);
+      var eased = 1-Math.pow(1-p,3);
+      var val = target*eased;
+      el.textContent = pre + val.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}) + suf;
+      if(p<1) requestAnimationFrame(step);
+      else el.textContent = pre + target.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}) + suf;
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  var cio = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ animateCount(en.target); cio.unobserve(en.target);} });
+  },{threshold:.6});
+  counters.forEach(function(c){cio.observe(c)});
+
+  /* hero big -> from 100 to 140 mil feel: keep static styled text */
+
+  /* mini bars in paradox */
+  var mio = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){
+      en.target.querySelectorAll('.mfill').forEach(function(f){ f.style.width = f.dataset.w + '%'; });
+      mio.unobserve(en.target);
+    }});
+  },{threshold:.3});
+  document.querySelectorAll('.par-col').forEach(function(c){mio.observe(c)});
+
+  /* ---- distribution chart ---- */
+  var dist = [
+    {l:'Altamente engajados', v:25, c:'var(--teal)'},
+    {l:'Moderadamente engajados', v:15, c:'var(--teal-2)'},
+    {l:'Passivos', v:40, c:'#E4B53C'},
+    {l:'Ativamente desengajados', v:20, c:'var(--red)'}
+  ];
+  var distHtml = dist.map(function(d){
+    return '<div class="dimrow" style="grid-template-columns:160px 1fr 38px">'
+      +'<div class="dname">'+d.l+'</div>'
+      +'<div class="dimtrack"><div class="dimfill" style="left:0;width:0;background:'+d.c+'" data-w="'+d.v+'"></div></div>'
+      +'<div class="dimval" style="color:'+d.c+'">'+d.v+'%</div></div>';
+  }).join('');
+  document.getElementById('distChart').innerHTML = distHtml;
+  var distIO = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){
+      en.target.querySelectorAll('.dimfill').forEach(function(f){ f.style.width = f.dataset.w+'%'; });
+      distIO.unobserve(en.target);
+    }});
+  },{threshold:.3});
+  distIO.observe(document.getElementById('distChart'));
+
+  /* ---- dimensions chart with modes ---- */
+  var dims = [
+    {n:'Customer/Client', fav:92, co:4, latam:null},
+    {n:'Leadership', fav:81, co:-2, latam:6},
+    {n:'Diversity & Inclusiveness', fav:79, co:-7, latam:-4},
+    {n:'Work Effectiveness', fav:76, co:-7, latam:-6},
+    {n:'Work Tasks & Influence', fav:69, co:-10, latam:-16},
+    {n:'Health & Well-Being', fav:68, co:-13, latam:null},
+    {n:'Workplace Health & Safety', fav:68, co:-8, latam:-4},
+    {n:'Enabling Work', fav:66, co:-11, latam:-2},
+    {n:'Career, Development & Learning', fav:65, co:-15, latam:-7},
+    {n:'Innovation & Experimentation', fav:58, co:-18, latam:-3},
+    {n:'Performance, Pay & Recognition', fav:52, co:-24, latam:-7},
+    {n:'Employment Brand', fav:49, co:-34, latam:-25}
+  ];
+  var dimChart = document.getElementById('dimChart');
+  var MAXGAP = 34;
+  function favColor(v){ if(v<50) return 'var(--red)'; if(v<66) return '#9A7AB5'; return 'var(--plum)'; }
+  function renderDims(mode){
+    var html = dims.map(function(d){
+      var track, valTxt, valColor='var(--plum)';
+      if(mode==='fav'){
+        track = '<div class="dimtrack"><div class="dimfill" style="left:0;width:'+d.fav+'%;background:'+favColor(d.fav)+'"></div></div>';
+        valTxt = d.fav; valColor = favColor(d.fav);
+      } else {
+        var g = (mode==='co') ? d.co : d.latam;
+        if(g===null){
+          track = '<div class="dimtrack diverge"></div>';
+          valTxt = '—'; valColor='var(--muted)';
+        } else {
+          var w = Math.min(Math.abs(g)/MAXGAP*50, 50);
+          var fill = g<0
+            ? '<div class="dimfill" style="right:50%;width:'+w+'%;background:var(--red)"></div>'
+            : '<div class="dimfill" style="left:50%;width:'+w+'%;background:var(--teal)"></div>';
+          track = '<div class="dimtrack diverge">'+fill+'</div>';
+          valTxt = (g>0?'+':'')+g; valColor = g<0?'var(--red)':'var(--teal)';
+        }
+      }
+      return '<div class="dimrow"><div class="dname">'+d.n+'</div>'+track
+        +'<div class="dimval" style="color:'+valColor+'">'+valTxt+(mode==='fav'?'%':'')+'</div></div>';
+    }).join('');
+    dimChart.innerHTML = html;
+  }
+  renderDims('fav');
+  document.querySelectorAll('.chart-toolbar .toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.chart-toolbar .toggle').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      renderDims(btn.dataset.mode);
+    });
+  });
+
+  /* ---- say stay strive ---- */
+  var sss = [
+    {cat:'SAY', q:'Recomendaria a TELUS a um amigo em busca de emprego', fav:75, gap:-5},
+    {cat:'SAY', q:'Falo coisas boas sobre trabalhar aqui', fav:60, gap:-21},
+    {cat:'STRIVE', q:'A TELUS me inspira a dar o meu melhor todo dia', fav:50, gap:-28},
+    {cat:'STAY', q:'Raramente penso em sair da TELUS', fav:35, gap:-34},
+    {cat:'STRIVE', q:'A TELUS me motiva a contribuir além do exigido', fav:30, gap:-45},
+    {cat:'STAY', q:'Seria preciso muito para me fazer sair', fav:25, gap:-49}
+  ];
+  document.getElementById('sssChart').innerHTML = sss.map(function(s){
+    return '<div class="sssrow">'
+      +'<div class="sss-cat cat-'+s.cat+'">'+s.cat+'</div>'
+      +'<div class="sss-body"><div class="q">'+s.q+'</div>'
+      +'<div class="sss-bars"><div class="sss-fav"><i data-w="'+s.fav+'"></i></div>'
+      +'<span class="sss-favn">'+s.fav+'%</span>'
+      +'<span class="sss-gap">'+s.gap+'</span></div></div></div>';
+  }).join('');
+  var sssIO = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){
+      en.target.querySelectorAll('.sss-fav i').forEach(function(f){ f.style.width=f.dataset.w+'%'; });
+      sssIO.unobserve(en.target);
+    }});
+  },{threshold:.25});
+  sssIO.observe(document.getElementById('sssChart'));
+
+  /* ---- nav scroll-spy ---- */
+  var secIds = ['hero','empresa','problema','debate','conclusao'];
+  var navLinks = document.querySelectorAll('nav.dots a');
+  var spy = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(en.isIntersecting){
+        var id = en.target.id;
+        navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+id); });
+      }
+    });
+  },{threshold:.4, rootMargin:'-20% 0px -40% 0px'});
+  secIds.forEach(function(id){ var el=document.getElementById(id); if(el) spy.observe(el); });
+})();
+</script>
+</body>
+</html>
