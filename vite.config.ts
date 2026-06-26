@@ -13,6 +13,12 @@ export default defineConfig({
   build: {
     target: 'es2020',
     rollupOptions: {
+      // Multi-page: the main app plus the hidden /timeline.html teleprompter
+      // (reachable only by typing the URL — not linked from the app).
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        timeline: fileURLToPath(new URL('./timeline.html', import.meta.url)),
+      },
       output: {
         // Split the heavier vendor libraries into their own chunks.
         manualChunks: {
